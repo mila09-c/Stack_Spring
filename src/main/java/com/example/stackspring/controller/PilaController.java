@@ -14,21 +14,25 @@ import java.util.Stack;
 @RequestMapping("/pila")
 public class PilaController {
 
+    private Stack<String> pila = new Stack<>();
+
     @PostMapping
     public String agregar(@RequestParam String valor) {
-
+        pila.push(valor);
         return "Se agrego: " + valor;
     }
 
     @GetMapping("/pop")
     public String sacar() {
-
-        return "La pila esta vacia";
+        if (pila.isEmpty()) {
+            return "La pila esta vacia";
+        }
+        String valor = pila.pop();
+        return "Se saco: " + valor;
     }
 
     @GetMapping
-    public List<String> verPila() {
-
-        return new ArrayList<>();
+    public Stack<String> verPila() {
+        return pila;
     }
 }
