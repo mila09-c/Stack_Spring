@@ -31,6 +31,14 @@ public class PilaController {
         return "Se saco: " + valor;
     }
 
+    @GetMapping("/peek")
+    public String verTope() {
+        if (pila.isEmpty()) {
+            return "La pila esta vacia";
+        }
+        return "El 1° elemento es: " + pila.peek();
+    }
+
     @GetMapping
     public Stack<String> verPila() {
         return pila;
