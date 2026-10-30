@@ -16,24 +16,38 @@ import java.util.Queue;
 public class TurnoController {
 
     private int contador = 0;
+    private Queue<Turno> turnos = new LinkedList<>();
 
     @PostMapping
     public Turno pedirTurno(@RequestBody TurnoRequest request) {
         contador++;
         Turno turno = new Turno(contador, request.getNombre());
-
+        turnos.offer(turno);
         return turno;
     }
 
     @GetMapping("/siguiente")
-    public Turno siguiente() {
+    public Object siguiente() {
+        if (turnos.isEmpty()) {
+            return "La cola está vacía";
+        }
 
-        return null;
+        Turno a = turnos.poll();
+        return "Se va " + a.getNombre();
     }
 
     @GetMapping
     public Queue<Turno> verCola() {
 
-        return null;
+        return turnos;
     }
+
+    @GetMapping("/turnos/actual")
+    public Object actualTurno() {
+        if (turnos.isEmpty()) {
+            return "La cola está vacía";
+        }
+        return turnos.peek();
+    }
+
 }
